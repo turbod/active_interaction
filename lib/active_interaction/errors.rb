@@ -121,6 +121,8 @@ module ActiveInteraction
 
     def merge_messages!(other, move)
       other.messages.each do |attribute, messages|
+        attribute = move[attribute] if move.key?(attribute)
+
         messages.each do |message|
           attribute = move[attribute] if move.key?(attribute)
 
