@@ -91,7 +91,8 @@ module ActiveInteraction
 
   # An extension that provides the ability to merge other errors into itself.
   class Errors < ActiveModel::Errors
-    # Merge other errors into this one.
+    # Merge other errors into this one. All errors are merged to base unless
+    #   they were specified using the `:move` attribute.
     #
     # @param other [Errors]
     # @param move [Hash] A mapping of errors where the key is an attribute on
@@ -120,48 +121,44 @@ module ActiveInteraction
     end
 
     def merge_messages!(other, move)
-      other.messages.each do |attribute, messages|
-        attribute = move[attribute] if move.key?(attribute)
+      other.messages.each do |from, messages|
+        to = move.fetch(from, :base)
 
         messages.each do |message|
-          attribute = move[attribute] if move.key?(attribute)
-
-          merge_message!(attribute, message)
+          merge_message!(from, to, message)
         end
       end
     end
 
-    def merge_message!(attribute, message)
-      unless attribute?(attribute)
-        message = full_message(attribute, message)
-        attribute = :base
-      end
-      add(attribute, message) unless added?(attribute, message)
+    def merge_message!(from, to, message)
+      message = full_message(from, message) if to == :base
+
+      add(to, message) unless added?(to, message)
     end
 
     def merge_details!(other, move)
-      other.messages.each do |attribute, messages|
-        messages.zip(other.details[attribute]) do |message, detail|
-          attribute = move[attribute] if move.key?(attribute)
+      other.messages.each do |from, messages|
+        messages.zip(other.details[from]) do |message, detail|
+          to = move.fetch(from, :base)
 
           if detailed_error?(detail)
-            merge_detail!(attribute, detail, message)
+            merge_detail!(from, to, detail, message)
           else
-            merge_message!(attribute, message)
+            merge_message!(from, to, message)
           end
         end
       end
     end
 
-    def merge_detail!(attribute, detail, message)
-      if attribute?(attribute) || attribute == :base
+    def merge_detail!(from, to, detail, message)
+      if from != :base && to == :base
+        merge_message!(from, to, message)
+      else
         options = detail.dup
         error = options.delete(:error)
         options[:message] = message
 
-        add(attribute, error, options) unless added?(attribute, error, options)
-      else
-        merge_message!(attribute, message)
+        add(to, error, options) unless added?(to, error, options)
       end
     end
   end
