@@ -1,7 +1,8 @@
 # [ActiveInteraction][]
 
 ActiveInteraction manages application-specific business logic.
-It's an implementation of the command pattern in Ruby.
+It's an implementation of service objects that act like ActiveModel
+instances and play well with Rails.
 
 [![Version](https://img.shields.io/gem/v/active_interaction.svg?style=flat-square)](https://rubygems.org/gems/active_interaction)
 [![Build](https://img.shields.io/travis/AaronLasseigne/active_interaction.svg?style=flat-square)](https://travis-ci.org/AaronLasseigne/active_interaction)
