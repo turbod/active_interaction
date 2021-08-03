@@ -1,6 +1,10 @@
 # [5.0.0][] (TBD)
 
-## Fix
+## Added
+
+- `Filter#process` which returns an `Input`.
+
+## Fixed
 
 - When passing an `ActiveRecord::Relation` in an array filter with no inner
   filter, the value returned was an `ActiveRecord::Relation` instead of an
@@ -14,33 +18,33 @@
 
 # [4.0.5][] (2021-07-11)
 
-## Fix
+## Fixed
 
 - [#480][] - Interfaces used inside hashes failed to recognize `nil` as a non-value.
 
 # [4.0.4][] (2021-07-03)
 
-## Fix
+## Fixed
 
 - [#510][] - Hash parameters failed when working outside of Rails.
 - [#511][] - Nested filters with options but no `:class` failed to have `:class` automatically added.
 
 # [4.0.3][] (2021-06-24)
 
-## Fix
+## Fixed
 
 - [#499][] - `given?` now recognizes multi-part date inputs by their primary key name
 - [#493][] - `compose` now properly accepts `Inputs`
 
 # [4.0.2][] (2021-06-22)
 
-## Fix
+## Fixed
 
 - [#505][] - Nested Interface filters using the `:methods` option threw an error.
 
 # [4.0.1][] (2021-05-26)
 
-## Fix
+## Fixed
 
 - Fix regression of filter name relaxing.
 - [#495][] - Fix time filter ignoring time zones
