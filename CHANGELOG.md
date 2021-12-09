@@ -1,3 +1,9 @@
+# [4.1.0][] (TBD)
+
+## Added
+
+- Support for Rails 7
+
 # [4.0.6][] (2021-10-13)
 
 ## Fix

@@ -1,0 +1,10 @@
+source 'https://rubygems.org'
+
+gemspec path: '..'
+
+gem 'actionpack', '7.0.0.rc1'
+gem 'activemodel', '7.0.0.rc1'
+gem 'activerecord', '7.0.0.rc1'
+unless defined?(JRUBY_VERSION) # rubocop:disable Style/IfUnlessModifier
+  gem 'sqlite3', '~> 1.4.1'
+end
